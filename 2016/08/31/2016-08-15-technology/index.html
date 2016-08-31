@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>git原代码管理（站在项目管理角度） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、大纲
+介绍和说明
+服务器分类和部署方法
+Bonobo系统的搭建
+团队原代码管理方式
+
+二、介绍和说明　　这篇文章我会重点介绍git的服务器端部署过程和团队协同开发原代码管理方式。很多新手经常会问，问题：snv和git那个好，有什么区别？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git原代码管理（站在项目管理角度）">
+<meta property="og:url" content="http://yoursite.com/2016/08/31/2016-08-15-technology/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、大纲
+介绍和说明
+服务器分类和部署方法
+Bonobo系统的搭建
+团队原代码管理方式
+
+二、介绍和说明　　这篇文章我会重点介绍git的服务器端部署过程和团队协同开发原代码管理方式。很多新手经常会问，问题：snv和git那个好，有什么区别？">
+<meta property="og:updated_time" content="2016-08-31T03:44:20.877Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git原代码管理（站在项目管理角度）">
+<meta name="twitter:description" content="一、大纲
+介绍和说明
+服务器分类和部署方法
+Bonobo系统的搭建
+团队原代码管理方式
+
+二、介绍和说明　　这篇文章我会重点介绍git的服务器端部署过程和团队协同开发原代码管理方式。很多新手经常会问，问题：snv和git那个好，有什么区别？">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="0" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="0" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-2016-08-15-technology" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/31/2016-08-15-technology/" class="article-date">
+  	<time datetime="2016-08-31T03:57:23.335Z" itemprop="datePublished">2016-08-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      git原代码管理（站在项目管理角度）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、大纲"><a href="#一、大纲" class="headerlink" title="一、大纲"></a>一、大纲</h3><ul>
+<li>介绍和说明</li>
+<li>服务器分类和部署方法</li>
+<li>Bonobo系统的搭建</li>
+<li>团队原代码管理方式</li>
+</ul>
+<h3 id="二、介绍和说明"><a href="#二、介绍和说明" class="headerlink" title="二、介绍和说明"></a>二、介绍和说明</h3><p>　　这篇文章我会重点介绍git的<code>服务器端部署过程</code>和<code>团队协同开发原代码管理方式</code>。很多新手经常会问，问题：snv和git那个好，有什么区别？<a id="more"></a>在回答之前，我先说一下我使用版本控制系统的历程。首先我也是从svn开始用起的，后来我们团队逐步改用git，但依然以svn为主。就个人来说，我几乎已完全转入git作为自己的版本控制工具。<br>　　实在是忍不了了,我就来批判一下svn的种种让人抓狂的地方。:(<br>　　1.svn需要经常连接服务器，服务器挂了就可以回家睡觉了。无论是检出项目、查看日志、合并文件、提交改动都需要连接服务器，而且工作的速度直接受制于服务器的快慢。您是否经历过下班后急着赶班车，但svn服务器半天反映的尴尬吗？<br>　　2.日志文件会出现无法正常显示的问题。总是有同事问我，你提交了日志为什么不写日志信息？啊，怎么可能没有写？Hook Script程序是我设置的，我真的是太清楚了。如果没有写日志或日志字数未大于十个字节，提交是不会成功的。这个svn的bug让我难以忍受，还会影响到文件的打包合并工作。<br>　　3.svn合并问题多多，痛苦不堪。我目前负责项目主干的合并工作，使用的版本控制系统就是svn。合并时会出现看不到日志信息而无法合并对应分支的版本、产生代码重复、注释行合并出错等等问题。这也是我开始讨厌使用svn的最大原因。想想git的强大的分支功能和行云流水般的合并快感，一个字：爽！爽！爽！<br>　　总结：我对新手的回答只有一句话，snv相对于git真的弱爆了，只有弱者才使用svn。svn最大的优点可能就是简单易用，适合新手吧。</p>
+<h3 id="三、服务器分类和部署方法"><a href="#三、服务器分类和部署方法" class="headerlink" title="三、服务器分类和部署方法"></a>三、服务器分类和部署方法</h3><p>　　服务器部分我把它分为Windows Service平台和Linux平台。因为git开发者即是Linux的开发者，故git天生就很好的适应Linux平台,而对windows平台的支持并不太好。不过近几年随着git的普及和github（12年Andreessen Horowitz投资一亿美金）的发展壮大，git对windows平台的支持也日渐完善，但还是会有中文乱码等问题。因此，逼我使用英文写日志内容。<br>　　windows平台部署使用Bonobo系统，此系统是采用ASP.NET MVC开发并且开源，你可以随意订制和二次开发。适合小型开发团队的使用。<br>　　Linux就搭建更为复杂一些，功能也更为强大。主要有三种流行的方案：<br>　　1.Gitosis，轻量级，开源项目，只能做到库级的权限控制。<br>　　2.Gitoliste，轻量级，开源项目，能做到分支级的权限控制。可以满足大部分公司和企业的开发需求。<br>　　3.Git+Repo+Gerrit,重量级，集版本控制、仓库管理、代码审核为一身，可管理大型及超大型项目。大名鼎鼎的Android平台就是使用的此方案。<br>　　关于Linux部分的部署方法，这里不做介绍，可以自行谷歌。这里附上一篇文章：<a href="http://blog.csdn.net/redstarofsleep/article/details/45092135" target="_blank" rel="external">《git服务器搭建及gitolite权限管理》</a>  </p>
+<h3 id="四、Bonobo系统的搭建"><a href="#四、Bonobo系统的搭建" class="headerlink" title="四、Bonobo系统的搭建"></a>四、Bonobo系统的搭建</h3><p>　　1.需要.net framewrork、MVC，把Bobobo整个文件夹部署到~/inetpub/wwwwroot下面即可，位置也可自定义。<br>　　2.打开IIS，配置应用程序，绑定IP地址等等。近似于部署网站。<br>　　备注：<a href="https://bonobogitserver.com/install/" target="_blank" rel="external">部署参考连接及下载地址</a><br>　　3.<strong>注意：</strong>如果找不到IIS_USERS用户，有可能是刚开启IIS功能，重启一下电脑即可；由于这个asp.net mvc4项目里已经包含了git相关的功能，所以电脑上不需要另外再安装Git For Windows工具了。</p>
+<h3 id="五、团队原代码管理方式"><a href="#五、团队原代码管理方式" class="headerlink" title="五、团队原代码管理方式"></a>五、团队原代码管理方式</h3><p>　　<strong>直接使用案例来讲解</strong><br>　　<strong>说明：</strong>共有两个仓库：jim仓库、zgw仓库<br>　　<strong>涉及分支：</strong><br>　　　　master<br>　　　　maint<br>　　　　teamjim<br>　　　　origin/master<br>　　　　origin/maint<br>　　　　origin/teamjim<br>　　　　jim/master<br>　　<strong>步骤：</strong><br>　　　　git remote add jim <a href="http://192.168.0.167:8011/Bonobo.Git.Server.v5.2/jim.git" target="_blank" rel="external">http://192.168.0.167:8011/Bonobo.Git.Server.v5.2/jim.git</a><br>　　　　git remote add origin <a href="http://192.168.0.167:8011/Bonobo.Git.Server.v5.2/zgw.git" target="_blank" rel="external">http://192.168.0.167:8011/Bonobo.Git.Server.v5.2/zgw.git</a><br>　　　　git checkout teamjim<br>　　　　git fetch jim<br>　　　　<strong>此时本地jim/master分支文件已和jim成员分支同步</strong><br>　　　　git merge jim/master    //合并jim/master分支内容到teamjim分支<br>　　　　git checkout maint<br>　　　　git merge teamjim        //将teamjim分支内容合并到maint用于测试问题<br>　　　　git merge master maint        //将maint中的内容合并到master主干上<br>　　　　git push –all origin        //推送主干和所有分支的内容  </p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/08/31/2015-05-10-life/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">飞鸟集</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 John Doe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: /
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
